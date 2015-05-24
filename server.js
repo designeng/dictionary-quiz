@@ -14,10 +14,12 @@ var test = function(){
     });
 }
 
-models.sequelize.sync().then(function () {
-    initialize().then(test);
-
+var startServer = function(){
     var server = app.listen(app.get('port'), function() {
         console.log('Express server listening on port ' + server.address().port);
     });
+}
+
+models.sequelize.sync().then(function () {
+    initialize().then(startServer);
 });
