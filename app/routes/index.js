@@ -9,16 +9,9 @@ var wordController      = require('../controllers/word');
 var mistakeController   = require('../controllers/mistake');
 
 router.get('/', function(req, res) {
-    models.User.findAll({
-        include: [ models.Quiz ]
-    }).then(function(users) {
-        res.json({ users: users });
-    });
 });
 
-// USER
-
-// in our quiz application user is a current player, while we have no registration phase. So, we have no update method yet.
+// in our small quiz application user is a current player, while we have no registration phase. So, we have no update method yet.
 
 router.route("/users")
     .post(userController.post)

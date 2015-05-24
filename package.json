@@ -1,5 +1,6 @@
 {
   "name": "simple-api",
+  "author": "Denis Savenok",
   "main": "server.js",
   "scripts": {
     "test": "npm run test-unit && npm run test-integration",
