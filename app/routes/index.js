@@ -10,6 +10,8 @@ router.get('/', function(req, res) {
     });
 });
 
+// USER
+
 // Just to demonstrate REST methods.
 // in our quiz application user is a current player, while we have no registration. So, we have no update method.
 router.route("/users")
@@ -46,5 +48,28 @@ router.route("/users")
             });
         });
     });
+
+// WORD
+
+router.route("/words")
+    .post(function(req, res) {
+        var en = req.param('en').trim();
+        var ru = req.param('ru').trim();
+        if(en.length && ru.length){
+            models.Word.create({
+                en: en,
+                ru: ru
+            }).then(function() {
+                res.json({ message: 'Word with values EN: ' + en + ' and RU:' + ru + ' created!' });
+            });
+        } else {
+            res.json({ error: 'Word EN and RU values should be defined!' });
+        }
+    })
+    .get(function(req, res) {
+        models.Word.findAll().then(function(words) {
+            res.json({ words: words });
+        });
+    })
 
 module.exports = router;
