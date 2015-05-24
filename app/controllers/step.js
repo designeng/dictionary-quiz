@@ -6,36 +6,24 @@ var getNextQuestion = function(req, res) {
     var response;
     var session = req.session;
 
-    console.log("SESSION:::::::::::::", session, session['user_name']);
-
-    return res.json({
-            user_name: 123
-        });
-
     // prevent service call for not registred user (player)
-    if(typeof session['user_name'] === "undefined"){
+    if(typeof session['username'] === "undefined"){
         return res.json({
-            user_name: session['user_name']
-        });
-    } else {
-        return res.json({
-            words: session["words"]
+            username: session['username']
         });
     }
 
     var words = session["words"];
-    var lang_keys;
-
-    console.log("SESSION words::::", words);
+    var lang_keys = [];
 
     _.shuffle(words);
-    randomWord = [lang_keys[0]];
+    var randomWord = [lang_keys[0]];
 
     session['current_word'] = randomWord;
 
     response = {
         quizword: randomWord,
-        choice: {},
+        choice: session["words"],
         state: "QUIZ_QUESTION"
     }
 

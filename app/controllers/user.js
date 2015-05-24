@@ -12,8 +12,9 @@ var UserController = {
                 username: username
             }).then(
                 function() {
-                    res.json({ message: 'User with username ' + username + ' registered for quiz!' });
-                    req = StateController.setInitialApplicationState(req);
+                    models.Word.findAll().then(function(words) {
+                        StateController.setInitialApplicationState(req, res, username);
+                    });
                 },
                 function(error) {
                     res.json({ error: error});

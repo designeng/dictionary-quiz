@@ -14,7 +14,7 @@ app.use(session(
         store: new FileStore,
         resave: true,
         saveUninitialized: true,
-        cookie: { maxAge: 60 * 1000 }
+        cookie: { maxAge: 60 * 1000 * 1000}
     }
 ));
 

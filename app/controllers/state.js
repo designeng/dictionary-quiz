@@ -5,37 +5,38 @@ var models  = require(__dirname + "/../models");
 
 var getApplicationState = function(req, res) {
     var response;
-    var user_name = req.session['user_name'];
+    var username = req.session['username'];
 
-    if (!user_name){
+    if (!username){
         response = {
             state: "INIT_USER_STATE",
-            user_name: user_name
+            username: username
         } 
     } else {
         response = {
             state: "QUESTIONS_STATE", 
-            user_name: user_name
+            username: username
         } 
     }
 
     res.json(response);
 }
 
-var setInitialApplicationState = function(req) {
+// session initialization
+var setInitialApplicationState = function(req, res, username) {
 
-    // session initialization
-    req.session["words"] = [];
-
-    req.session.user_name = "admin";
+    req.session.username = username;
+    req.session.words = [];
 
     models.Word.findAll().then(function(words) {
         _.forEach(words, function (word) {
             req.session["words"].push({id: word.id, en: word.en, ru: word.ru});
         });
-    });
 
-    return req;
+        res.json({ 
+            message: 'User with username ' + username + ' registered for quiz!'
+        });
+    });
 }
 
 var StateController = {
