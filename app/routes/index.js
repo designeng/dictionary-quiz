@@ -16,16 +16,18 @@ router.get('/', function(req, res) {
 // in our quiz application user is a current player, while we have no registration. So, we have no update method.
 router.route("/users")
     .post(function(req, res) {
-        var username = req.param('username').trim();
-        if(typeof username !== "undefined" && username.length){
-            models.User.create({
-                username: username
-            }).then(function() {
+        var username = req.param('username');
+
+        models.User.create({
+            username: username
+        }).then(
+            function() {
                 res.json({ message: 'User with username ' + username + ' created!' });
-            });
-        } else {
-            res.json({ error: 'User username should be defined!' });
-        }
+            },
+            function(error) {
+                res.json({ error: error});
+            }
+        );
     })
     .get(function(req, res) {
         models.User.findAll({
@@ -53,22 +55,52 @@ router.route("/users")
 
 router.route("/words")
     .post(function(req, res) {
-        var en = req.param('en').trim();
-        var ru = req.param('ru').trim();
-        if(en.length && ru.length){
-            models.Word.create({
-                en: en,
-                ru: ru
-            }).then(function() {
+        var en = req.param('en');
+        var ru = req.param('ru');
+
+        models.Word.create({
+            en: en,
+            ru: ru
+        }).then(
+            function() {
                 res.json({ message: 'Word with values EN: ' + en + ' and RU:' + ru + ' created!' });
-            });
-        } else {
-            res.json({ error: 'Word EN and RU values should be defined!' });
-        }
+            },
+            function(error) {
+                res.json({ error: error});
+            }
+        );
     })
     .get(function(req, res) {
         models.Word.findAll().then(function(words) {
             res.json({ words: words });
+        });
+    });
+
+// WORD
+
+router.route("/mistakes")
+    .post(function(req, res) {
+        var word_id = req.param('word_id');
+        var lang = req.param('lang');
+        var value = req.param('value');
+
+        models.Mistakes.create({
+            word_id: word_id,
+            lang: lang,
+            value: value
+        }).then(
+            function() {
+                res.json({ message: 'Mistake with values LANG: ' + lang + ' and VALUE:' + value + ' for wordID: ' + word_id + ' registered!' });
+            },
+            function(error) {
+                res.json({ error: error});
+            }
+        );
+
+    })
+    .get(function(req, res) {
+        models.Mistake.findAll().then(function(mistakes) {
+            res.json({ mistakes: mistakes });
         });
     })
 

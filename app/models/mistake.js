@@ -1,15 +1,22 @@
 "use strict";
 
 module.exports = function(sequelize, DataTypes) {
-    var Word = sequelize.define("Word", {
-        en: {
+    var Mistake = sequelize.define("Mistake", {
+        word_id: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 notEmpty: true
             }
         },
-        ru: {
+        lang: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
+        },
+        value: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
@@ -20,5 +27,5 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {}
     });
 
-    return Word;
+    return Mistake;
 };
