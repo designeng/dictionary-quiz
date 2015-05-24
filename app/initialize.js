@@ -1,5 +1,5 @@
 var _ = require("lodash");
-var pipeline = require("when/pipeline");
+var sequence = require("when/sequence");
 var models  = require(__dirname + "/models");
 
 var pairs = [
@@ -28,26 +28,27 @@ var initialize = function () {
 
     var noop = function () {}
 
-    var addToTasks = function (cb) {
-        tasks.push(cb);
+    var addToQueue = function (cb) {
+        queue.push(cb);
     }
 
-    var tasks = [];
+    var queue = [];
 
     models.Word.destroy({ truncate: true }).then(function () {
-        addToTasks(noop);
+        addToQueue(noop);
     });
 
     _.forEach(pairs, function (pair) {
         models.Word.create({
             en: pair[0],
             ru: pair[1]
-        }).then(function () {
-            addToTasks(noop);
+        }).then(function (res) {
+            console.log("'" + res["en"] + "' word created");
+            addToQueue(noop);
         });
     });
 
-    return pipeline(tasks);
+    return sequence(queue);
 }
 
 module.exports = initialize;
