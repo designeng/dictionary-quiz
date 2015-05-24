@@ -13,9 +13,9 @@ router.post('/create', function(req, res) {
 router.get('/:user_id/destroy', function(req, res) {
   models.User.find({
     where: {id: req.param('user_id')},
-    include: [models.Task]
+    include: [models.Quiz]
   }).then(function(user) {
-    models.Task.destroy(
+    models.Quiz.destroy(
       {where: {UserId: user.id}}
     ).then(function(affectedRows) {
       user.destroy().then(function() {
@@ -25,11 +25,11 @@ router.get('/:user_id/destroy', function(req, res) {
   });
 });
 
-router.post('/:user_id/tasks/create', function (req, res) {
+router.post('/:user_id/quizzes/create', function (req, res) {
   models.User.find({
     where: { id: req.param('user_id') }
   }).then(function(user) {
-    models.Task.create({
+    models.Quiz.create({
       title: req.param('title')
     }).then(function(title) {
       title.setUser(user).then(function() {
@@ -39,15 +39,15 @@ router.post('/:user_id/tasks/create', function (req, res) {
   });
 });
 
-router.get('/:user_id/tasks/:task_id/destroy', function (req, res) {
+router.get('/:user_id/quizzes/:quiz_id/destroy', function (req, res) {
   models.User.find({
     where: { id: req.param('user_id') }
   }).then(function(user) {
-    models.Task.find({
-      where: { id: req.param('task_id') }
-    }).then(function(task) {
-      task.setUser(null).then(function() {
-        task.destroy().then(function() {
+    models.Quiz.find({
+      where: { id: req.param('quiz_id') }
+    }).then(function(Quiz) {
+      Quiz.setUser(null).then(function() {
+        Quiz.destroy().then(function() {
           res.redirect('/');
         });
       });

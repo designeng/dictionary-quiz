@@ -4,7 +4,7 @@ var router  = express.Router();
 
 router.get('/', function(req, res) {
   models.User.findAll({
-    include: [ models.Task ]
+    include: [ models.Quiz ]
   }).then(function(users) {
     res.json({ users: users });
   });

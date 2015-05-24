@@ -1,8 +1,5 @@
-var app = require('./app/app');
-
-// console.log("app", app);
-
-var models = require("./app/models");
+var app     = require('./app/app'),
+    models  = require("./app/models");
 
 app.set('port', process.env.PORT || 8080);
 
