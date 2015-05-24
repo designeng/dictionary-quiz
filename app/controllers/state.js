@@ -14,7 +14,7 @@ var getApplicationState = function(req, res) {
         } 
     } else {
         response = {
-            state: "Q_STATE", 
+            state: "QUESTIONS_STATE", 
             user_name: user_name
         } 
     }
@@ -22,19 +22,20 @@ var getApplicationState = function(req, res) {
     res.json(response);
 }
 
-var setInitialApplicationState = function(session) {
+var setInitialApplicationState = function(req) {
 
     // session initialization
-    session["words"] = [];
+    req.session["words"] = [];
+
+    req.session.user_name = "admin";
 
     models.Word.findAll().then(function(words) {
         _.forEach(words, function (word) {
-            session["words"].push({id: word.id, en: word.en, ru: word.ru});
+            req.session["words"].push({id: word.id, en: word.en, ru: word.ru});
         });
-
-        console.log("SESSION WORDS:::", session["words"]);
     });
-     
+
+    return req;
 }
 
 var StateController = {

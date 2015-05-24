@@ -1,13 +1,23 @@
-var express         = require('express'),
-    cookieParser    = require('cookie-parser');
-    session         = require('express-session'),
-    app             = express(),
-    bodyParser      = require('body-parser'),
+var express         = require('express');
+var cookieParser    = require('cookie-parser');
+var session         = require('express-session');
+var FileStore       = require('session-file-store')(session);
+var app             = express();
+var bodyParser      = require('body-parser');
 
-    routes          = require('./routes/index');
+var routes          = require('./routes/index');
 
 app.use(cookieParser());
-app.use(session({ secret: 'rikitikitavi', cookie: { maxAge: 60 * 1000 }}));
+app.use(session(
+    { 
+        secret: 'rikitikitavi',
+        path: "/api",
+        store: new FileStore,
+        resave: true,
+        saveUninitialized: true
+        // cookie: { maxAge: 60 * 1000 }
+    }
+));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

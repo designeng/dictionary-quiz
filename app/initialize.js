@@ -43,7 +43,7 @@ var initialize = function () {
             en: pair[0],
             ru: pair[1]
         }).then(function (res) {
-            console.log("'" + res["en"] + "' word created");
+            // console.log("'" + res["en"] + "' word created");
             addToQueue(noop);
         });
     });

@@ -13,7 +13,7 @@ var UserController = {
             }).then(
                 function() {
                     res.json({ message: 'User with username ' + username + ' registered for quiz!' });
-                    StateController.setInitialApplicationState(req.session);
+                    req = StateController.setInitialApplicationState(req);
                 },
                 function(error) {
                     res.json({ error: error});
