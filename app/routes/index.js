@@ -34,4 +34,8 @@ router.route("/state")
 router.route("/step")
     .get(stepController.getNextQuestion);
 
+// Quiz step answer route: register answer for current question (step)
+router.route("/step/answer")
+    .post(stepController.registerAnswer);
+
 module.exports = router;

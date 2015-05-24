@@ -28,6 +28,7 @@ var setInitialApplicationState = function(req, res, username) {
     req.session.username = username;
     req.session.words = req.session.dictionary = [];
     req.session.userscore = 0;
+    req.session.mistakescount = 0;
 
     models.Word.findAll().then(function(words) {
         _.forEach(words, function (word) {

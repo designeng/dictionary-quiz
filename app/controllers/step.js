@@ -1,6 +1,7 @@
 "use strict";
 
 var _ = require("lodash");
+var models  = require('../models');
 var UserController  = require('../controllers/user');
 
 var getNextQuestion = function(req, res) {
@@ -28,7 +29,7 @@ var getNextQuestion = function(req, res) {
 
     words = _.shuffle(words);
     var randomWord = words.shift();
-    session['current_word'] = randomWord;
+    session['currentWord'] = randomWord;
 
     var lang_keys = ["en", "ru"];
     lang_keys = _.shuffle(lang_keys);
@@ -63,8 +64,91 @@ var getNextQuestion = function(req, res) {
     res.json(response);
 }
 
+var registerAnswer = function(req, res) {
+    var session = req.session;
+    var mistakescount = session["mistakescount"];
+    var userscore = session["userscore"];
+    var currentWord = session["currentWord"];
+    var point = 0,
+        mistake;
+
+    var response = {};
+
+    var updateResponse = function(response, array){
+        return _.merge(response, array);
+    }
+
+    var value = req.param('value');
+
+    if(typeof value === "undefined"){
+        return res.json({error: "VALUE should not be undefined!"});
+    }
+
+    var answerLang = "ERROR",
+        originLang,
+        answerLang;
+
+    value = value.trim();
+
+    if (value.match(/[^A-Za-z]/)){
+        originLang = "ru";
+        answerLang = "en";
+    } else if (value.match(/[^А-Я,а-я]/)){
+        originLang = "en";
+        answerLang = "ru";
+    }
+
+    if (answerLang === "ERROR"){
+        response = {
+            error: "NOT_VALID_ANSWER_VALUE",
+            your_answer: value,
+            // debug
+            currentWord: currentWord,
+            originLang: originLang,
+            answerLang: answerLang
+        };
+        return res.json(response)
+    } else {
+        response = {};
+
+        if (currentWord[originLang] !== value){
+            models.Mistake.create({
+                word_id: currentWord["id"],
+                lang: originLang,
+                value: value
+            }).then(
+                function() {
+                    mistakescount++;
+                    session["mistakescount"] = mistakescount;
+
+                    // quiz is over, if {3} mistakes occured
+                    if (mistakescount == 3){
+                        UserController.saveCurrentUserResult(session);
+                        response = updateResponse(response, { state: "QUIZ_END_WITH_MISTAKES" });
+                        
+                        return res.json(response)
+                    }
+                },
+                function(error) {
+                    res.json({ error: error});
+                }
+            );
+
+        } else {
+            point = 1;
+            ++userscore;
+            session["userscore"] = userscore;
+        }
+
+        response =  updateResponse(response, { point: point, userscore: userscore, mistakescount: mistakescount, currentWord: currentWord, answer: value });
+        
+        return res.json(response)
+    }
+}
+
 var StepController = {
-    getNextQuestion: getNextQuestion
+    getNextQuestion: getNextQuestion,
+    registerAnswer: registerAnswer
 }
 
 module.exports = StepController
