@@ -1,6 +1,8 @@
-var models  = require('../models');
+var fs      = require("fs");
 var express = require('express');
 var router  = express.Router();
+
+var models  = require('../models');
 
 var userController      = require('../controllers/user');
 var stateController     = require('../controllers/state');
@@ -8,7 +10,10 @@ var stepController      = require('../controllers/step');
 var wordController      = require('../controllers/word');
 var mistakeController   = require('../controllers/mistake');
 
-router.get('/', function(req, res) {
+router.get('/quiz', function(req, res) {
+    console.log("-----/");
+    // indexHtml = fs.readFileSync(__dirname + '/../../client/index.html', 'utf-8');
+    // res.html(indexHtml);
 });
 
 // in our small quiz application user is a current player, while we have no registration phase. So, we have no update method yet.
