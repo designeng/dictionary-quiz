@@ -2,7 +2,13 @@
 
 module.exports = function(sequelize, DataTypes) {
     var Quiz = sequelize.define("Quiz", {
-        title: DataTypes.STRING
+        title: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
+        }
     }, {
         classMethods: {
             associate: function(models) {
