@@ -1,5 +1,8 @@
 "use strict";
 
+var _ = require("lodash");
+var models  = require(__dirname + "/../models");
+
 var getApplicationState = function(req, res) {
     var response;
     var user_name = req.session['user_name'];
@@ -19,8 +22,19 @@ var getApplicationState = function(req, res) {
     res.json(response);
 }
 
-var setInitialApplicationState = function(res) {
-    console.log("setInitialApplicationState:::::", res)
+var setInitialApplicationState = function(session) {
+
+    // session initialization
+    session["words"] = [];
+
+    models.Word.findAll().then(function(words) {
+        _.forEach(words, function (word) {
+            session["words"].push({id: word.id, en: word.en, ru: word.ru});
+        });
+
+        console.log("SESSION WORDS:::", session["words"]);
+    });
+     
 }
 
 var StateController = {
