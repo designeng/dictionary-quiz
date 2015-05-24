@@ -1,40 +1,23 @@
-var fs = require("fs");
-var Promise = require("bluebird");
-Promise.promisifyAll(fs);
+var _ = require("lodash");
 
 var app     = require('./app/app'),
+    initialize = require('./app/initialize'),
     models  = require("./app/models");
 
 app.set('port', process.env.PORT || 8080);
 
-models.sequelize.sync().then(
-    function () {
-        console.log("------")
-        fs.readFileAsync(__dirname + "/sql/init.sql", "utf-8").then(function (queryStatement) {
-            
-            // console.log(queryStatement);
-
-            setTimeout(function () {
-                // var queryStatement = "INSERT INTO `words` SET ??", {en: "apple", ru: "яблоко"}
-                var queryStatement = "INSERT INTO WORDS (en, ru) VALUES ('apple', 'яблоко')";
-                models.sequelize.query(queryStatement);
-                // test
-                models.Word.findAll().then(function(words) {
-                    console.log("WORDS:::::", words);
-                }); 
-            }, 2000);
-            
-
-            
-
-            var server = app.listen(app.get('port'), function() {
-                console.log('Express server listening on port ' + server.address().port);
-            });
+var test = function(){
+    models.Word.findAll().then(function(words) {
+        _.forEach(words, function(w){
+            console.log(w.id, w.en, w.ru);
         });
-    }
-// .then(function () {
-//     var server = app.listen(app.get('port'), function() {
-//         console.log('Express server listening on port ' + server.address().port);
-//     });
-// }
-);
+    });
+}
+
+models.sequelize.sync().then(function () {
+    initialize().then(test);
+
+    var server = app.listen(app.get('port'), function() {
+        console.log('Express server listening on port ' + server.address().port);
+    });
+});
