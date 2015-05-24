@@ -2,7 +2,8 @@ var models  = require('../models');
 var express = require('express');
 var router  = express.Router();
 
-var step = require('../controllers/step');
+var state   = require('../controllers/state');
+var step    = require('../controllers/step');
 
 router.get('/', function(req, res) {
     models.User.findAll({
@@ -106,7 +107,11 @@ router.route("/mistakes")
         });
     })
 
-// Quiz step
+// Application state route
+router.route("/state")
+    .get(state);
+
+// Quiz step route
 router.route("/step")
     //get quiz step quiestion 
     .get(step);

@@ -4,7 +4,9 @@ var _ = require("lodash");
 
 module.exports = function(req, res) {
     var response;
-    var session;
+    var session = req.session;
+
+    console.log("SESSION:", req.session);
 
     // prevent service call for not registred user (player)
     if(!session['user_name']){
