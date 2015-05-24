@@ -8,6 +8,10 @@ module.exports = function(sequelize, DataTypes) {
             validate: {
                 notEmpty: true
             }
+        },
+        userscore: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         }
     }, {
         classMethods: {

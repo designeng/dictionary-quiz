@@ -6,20 +6,7 @@ var StateController  = require('../controllers/state');
 var UserController = {
 
     post: function(req, res) {
-            var username = req.param('username');
-
-            models.User.create({
-                username: username
-            }).then(
-                function() {
-                    models.Word.findAll().then(function(words) {
-                        StateController.setInitialApplicationState(req, res, username);
-                    });
-                },
-                function(error) {
-                    res.json({ error: error});
-                }
-            )
+            StateController.setInitialApplicationState(req, res, req.param('username'));
         },
 
     get: function(req, res) {
@@ -43,6 +30,20 @@ var UserController = {
                     });
                 });
             })
+        },
+
+    saveCurrentUserResult: function(session) {
+            models.User.create({
+                username: session["username"],
+                userscore: session["userscore"]
+            }).then(
+                function() {
+                    console.log("User results:::", session["userscore"]);
+                },
+                function(error) {
+                    console.log(error);
+                }
+            )
         }
 }
 
