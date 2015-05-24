@@ -1,6 +1,7 @@
 "use strict";
 
 var models  = require('../models');
+var StateController  = require('../controllers/state');
 
 var UserController = {
 
@@ -11,12 +12,13 @@ var UserController = {
                 username: username
             }).then(
                 function() {
-                    res.json({ message: 'User with username ' + username + ' created!' });
+                    res.json({ message: 'User with username ' + username + ' registered for quiz!' });
+                    StateController.setInitialApplicationState("REGISTERED");
                 },
                 function(error) {
                     res.json({ error: error});
                 }
-            );
+            )
         },
 
     get: function(req, res) {

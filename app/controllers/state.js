@@ -6,12 +6,12 @@ var getApplicationState = function(req, res) {
 
     if (!user_name){
         response = {
-            state: "INIT_USER_STATE", 
+            state: "INIT_USER_STATE",
             user_name: user_name
         } 
     } else {
         response = {
-            state: "INIT_USER_STATE", 
+            state: "Q_STATE", 
             user_name: user_name
         } 
     }
@@ -19,8 +19,13 @@ var getApplicationState = function(req, res) {
     res.json(response);
 }
 
+var setInitialApplicationState = function(res) {
+    console.log("setInitialApplicationState:::::", res)
+}
+
 var StateController = {
-    getApplicationState: getApplicationState
+    getApplicationState: getApplicationState,
+    setInitialApplicationState: setInitialApplicationState
 }
 
 module.exports = StateController
