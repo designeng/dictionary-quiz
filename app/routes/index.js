@@ -2,8 +2,11 @@ var models  = require('../models');
 var express = require('express');
 var router  = express.Router();
 
-var state   = require('../controllers/state');
-var step    = require('../controllers/step');
+var userController      = require('../controllers/user');
+var stateController     = require('../controllers/state');
+var stepController      = require('../controllers/step');
+var wordController      = require('../controllers/word');
+var mistakeController   = require('../controllers/mistake');
 
 router.get('/', function(req, res) {
     models.User.findAll({
@@ -15,105 +18,27 @@ router.get('/', function(req, res) {
 
 // USER
 
-// Just to demonstrate REST methods.
-// in our quiz application user is a current player, while we have no registration. So, we have no update method.
+// in our quiz application user is a current player, while we have no registration phase. So, we have no update method yet.
+
 router.route("/users")
-    .post(function(req, res) {
-        var username = req.param('username');
-
-        models.User.create({
-            username: username
-        }).then(
-            function() {
-                res.json({ message: 'User with username ' + username + ' created!' });
-            },
-            function(error) {
-                res.json({ error: error});
-            }
-        );
-    })
-    .get(function(req, res) {
-        models.User.findAll({
-            include: [ models.Quiz ]
-        }).then(function(users) {
-            res.json({ users: users });
-        });
-    })
-    .delete(function(req, res) {
-        var user_id = req.param('user_id');
-        models.User.find({
-            where: {id: user_id},
-            include: [models.Quiz]
-        })
-        .then(function(user) {
-            models.Quiz.destroy({where: {UserId: user.id}}).then(function(affectedRows) {
-                user.destroy().then(function() {
-                    res.json({ message: 'User with id ' + user_id + ' deleted!' });
-                });
-            });
-        });
-    });
-
-// WORD
+    .post(userController.post)
+    .get(userController.get)
+    .delete(userController.delete);
 
 router.route("/words")
-    .post(function(req, res) {
-        var en = req.param('en');
-        var ru = req.param('ru');
-
-        models.Word.create({
-            en: en,
-            ru: ru
-        }).then(
-            function() {
-                res.json({ message: 'Word with values EN: ' + en + ' and RU:' + ru + ' created!' });
-            },
-            function(error) {
-                res.json({ error: error});
-            }
-        );
-    })
-    .get(function(req, res) {
-        models.Word.findAll().then(function(words) {
-            res.json({ words: words });
-        });
-    });
-
-// WORD
+    .post(wordController.post)
+    .get(wordController.get);
 
 router.route("/mistakes")
-    .post(function(req, res) {
-        var word_id = req.param('word_id');
-        var lang = req.param('lang');
-        var value = req.param('value');
-
-        models.Mistakes.create({
-            word_id: word_id,
-            lang: lang,
-            value: value
-        }).then(
-            function() {
-                res.json({ message: 'Mistake with values LANG: ' + lang + ' and VALUE:' + value + ' for wordID: ' + word_id + ' registered!' });
-            },
-            function(error) {
-                res.json({ error: error});
-            }
-        );
-
-    })
-    .get(function(req, res) {
-        models.Mistake.findAll().then(function(mistakes) {
-            res.json({ mistakes: mistakes });
-        });
-    })
+    .post(mistakeController.post)
+    .get(mistakeController.get)
 
 // Application state route
 router.route("/state")
-    .get(state);
+    .get(stateController.getApplicationState);
 
-// Quiz step route
+// Quiz step route: get quiz step quiestion 
 router.route("/step")
-    //get quiz step quiestion 
-    .get(step);
+    .get(stepController.getNextQuestion);
 
 module.exports = router;

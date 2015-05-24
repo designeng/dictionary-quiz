@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function(req, res) {
+var getApplicationState = function(req, res) {
     var response;
     var user_name = req.session['user_name'];
 
@@ -18,3 +18,9 @@ module.exports = function(req, res) {
 
     res.json(response);
 }
+
+var StateController = {
+    getApplicationState: getApplicationState
+}
+
+module.exports = StateController

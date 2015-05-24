@@ -2,7 +2,7 @@
 
 var _ = require("lodash");
 
-module.exports = function(req, res) {
+var getNextQuestion = function(req, res) {
     var response;
     var session = req.session;
 
@@ -29,3 +29,9 @@ module.exports = function(req, res) {
 
     res.json(response);
 }
+
+var StepController = {
+    getNextQuestion: getNextQuestion
+}
+
+module.exports = StepController
