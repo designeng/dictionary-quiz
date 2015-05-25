@@ -1,11 +1,12 @@
 define [
+    "api"
     "components/ajax/ajaxRequest"
-], (AjaxRequest) ->
+], (api, AjaxRequest) ->
 
     ApplicationState =
 
         getApplicationState: ->
-            stateServicePath = "../api/web/v1/states"
+            stateServicePath = api.stateServicePath
             new AjaxRequest(stateServicePath, null, "GET", "application/json").always @onGetApplicationState
 
         onGetApplicationState: (result) ->

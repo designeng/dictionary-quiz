@@ -3,8 +3,9 @@ define [
     "jquery"
     "react"
     "reactRouter"
+    "api"
     "components/ajax/ajaxRequest"
-], (_, $, React, Router, AjaxRequest) ->
+], (_, $, React, Router, api, AjaxRequest) ->
 
     Route = Router.Route
     Link = Router.Link
@@ -89,6 +90,7 @@ define [
             panelBodyClass = "panel-body"
             panelTitleClass = "panel-title"
             panelHeadingClass = "panel-heading"
+            endpoint = api.usersServicePath
 
             return (
                 <div className={panelClass}>
@@ -96,7 +98,7 @@ define [
                         <h3 className={panelTitleClass}>Dictionary Quiz</h3>
                     </div>
                     <div className={panelBodyClass}>
-                        <UserForm endpoint="../api/web/v1/sessions" method="POST" next="questions"/>
+                        <UserForm endpoint={endpoint} method="POST" next="questions"/>
                     </div>
                 </div>
             )

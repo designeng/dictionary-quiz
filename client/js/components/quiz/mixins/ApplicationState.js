@@ -1,9 +1,9 @@
-define(["components/ajax/ajaxRequest"], function(AjaxRequest) {
+define(["api", "components/ajax/ajaxRequest"], function(api, AjaxRequest) {
   var ApplicationState;
   return ApplicationState = {
     getApplicationState: function() {
       var stateServicePath;
-      stateServicePath = "../api/web/v1/states";
+      stateServicePath = api.stateServicePath;
       return new AjaxRequest(stateServicePath, null, "GET", "application/json").always(this.onGetApplicationState);
     },
     onGetApplicationState: function(result) {

@@ -1,6 +1,8 @@
 require.config({
   baseUrl: "/js",
-  paths: {},
+  paths: {
+    api: "config/api"
+  },
   packages: [
     {
       name: "underscore",

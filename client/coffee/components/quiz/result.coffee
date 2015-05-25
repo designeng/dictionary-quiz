@@ -11,7 +11,7 @@ define [
             router: React.PropTypes.func
 
         getDefaultProps: ->
-            userScorePath: "../api/web/v1/sessions"
+            userScorePath: "/api/users"
             method: "GET"
 
         getInitialState: ->

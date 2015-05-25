@@ -3,7 +3,7 @@ require.config
     baseUrl: "/js"
 
     paths: {
-
+        api: "config/api"
     }
 
     packages: [
@@ -11,32 +11,32 @@ require.config
         {
             name: "underscore"
             main: "lodash"
-            location: "../../vendor/bower/lodash/dist"
+            location: "vendors/lodash/dist"
         },
         {
             name: "jquery"
             main: "jquery"
-            location: "../../vendor/bower/jquery/dist"
+            location: "vendors/jquery/dist"
         },
         {
             name: "text"
             main: "text"
-            location: "../../vendor/bower/text"
+            location: "vendors/text"
         },
         {
             name: "signals"
             main: "signals"
-            location: "../../vendor/bower/js-signals/dist"
+            location: "vendors/js-signals/dist"
         },
         {
             name: "react"
             main: "react"
-            location: "../../vendor/bower/react"
+            location: "vendors/react"
         },
         {
             name: "reactRouter"
             main: "ReactRouter"
-            location: "../../vendor/bower/react-router/build/umd"
+            location: "vendors/react-router/build/umd"
         }
     ]
 

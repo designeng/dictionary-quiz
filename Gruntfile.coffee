@@ -57,17 +57,6 @@ module.exports = (grunt) ->
                     ext: '.js'
                 ]
 
-
-        # connect:
-        #     server:
-        #         options:
-        #             port: port
-        #             base: '.'
-        #             middleware: (connect, options) ->
-        #                 return [
-        #                     connectMW.folderMount(connect, options.base)
-        #                 ]
-
         concat:
             main:
                 src: ["client/js/requireConfig.js", "client/js/main.js"]
@@ -106,8 +95,9 @@ module.exports = (grunt) ->
     # compilation
     grunt.registerTask "coffee-compile-app", ["newer:cjsx:app"]
 
-    # grunt.registerTask "server", ["connect"]
-
     grunt.loadNpmTasks "grunt-nodemon"
 
-    grunt.registerTask "default", ["nodemon", "watch"]
+    # TODO: nodemon does not watch .coffee - open issue
+    grunt.registerTask "default", ["nodemon"]
+    # compile coffee separately (use concurency?)
+    grunt.registerTask "compile", ["watch"]

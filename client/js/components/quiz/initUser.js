@@ -1,4 +1,4 @@
-define(["underscore", "jquery", "react", "reactRouter", "components/ajax/ajaxRequest"], function(_, $, React, Router, AjaxRequest) {
+define(["underscore", "jquery", "react", "reactRouter", "api", "components/ajax/ajaxRequest"], function(_, $, React, Router, api, AjaxRequest) {
   var InitUser, Link, Route, UserForm;
   Route = Router.Route;
   Link = Router.Link;
@@ -98,11 +98,12 @@ define(["underscore", "jquery", "react", "reactRouter", "components/ajax/ajaxReq
   });
   InitUser = React.createClass({
     render: function() {
-      var panelBodyClass, panelClass, panelHeadingClass, panelTitleClass;
+      var endpoint, panelBodyClass, panelClass, panelHeadingClass, panelTitleClass;
       panelClass = "panel panel-default";
       panelBodyClass = "panel-body";
       panelTitleClass = "panel-title";
       panelHeadingClass = "panel-heading";
+      endpoint = api.usersServicePath;
       return React.createElement("div", {
         "className": panelClass
       }, React.createElement("div", {
@@ -112,7 +113,7 @@ define(["underscore", "jquery", "react", "reactRouter", "components/ajax/ajaxReq
       }, "Dictionary Quiz")), React.createElement("div", {
         "className": panelBodyClass
       }, React.createElement(UserForm, {
-        "endpoint": "../api/web/v1/sessions",
+        "endpoint": endpoint,
         "method": "POST",
         "next": "questions"
       })));

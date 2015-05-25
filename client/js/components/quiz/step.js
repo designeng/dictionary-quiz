@@ -1,4 +1,4 @@
-define(["underscore", "jquery", "react", "./choice", "./mixins/ApplicationState", "components/ajax/ajaxRequest"], function(_, $, React, Choice, ApplicationState, AjaxRequest) {
+define(["underscore", "jquery", "react", "api", "./choice", "./mixins/ApplicationState", "components/ajax/ajaxRequest"], function(_, $, React, api, Choice, ApplicationState, AjaxRequest) {
   var Step;
   return Step = React.createClass({
     mixins: [ApplicationState],
@@ -16,8 +16,8 @@ define(["underscore", "jquery", "react", "./choice", "./mixins/ApplicationState"
     getDefaultProps: function() {
       return {
         resultRoutePath: "result",
-        stepServicePath: "../api/web/v1/steps",
-        checkAnswerServicePath: "../api/web/v1/answers"
+        stepServicePath: api.stepServicePath,
+        checkAnswerServicePath: api.checkAnswerServicePath
       };
     },
     componentDidMount: function() {

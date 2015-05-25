@@ -56,7 +56,7 @@ var getNextQuestion = function(req, res) {
     session['words'] = words;
 
     response = {
-        quizword: randomWord,
+        quizword: randomWord[lang_keys[0]],
         choice: additionalChoice,
         state: "QUIZ_QUESTION"
     }

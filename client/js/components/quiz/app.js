@@ -1,4 +1,4 @@
-define(["react", "reactRouter", "components/ajax/ajaxRequest", "./initUser", "./step", "./result"], function(React, Router, AjaxRequest, InitUserHandler, StepHandler, ResultHandler) {
+define(["react", "reactRouter", "api", "components/ajax/ajaxRequest", "./initUser", "./step", "./result"], function(React, Router, api, AjaxRequest, InitUserHandler, StepHandler, ResultHandler) {
   var App, NotFound, NotFoundRoute, Redirect, Route, RouteHandler, routes;
   Route = Router.Route;
   NotFoundRoute = Router.NotFoundRoute;
@@ -13,7 +13,7 @@ define(["react", "reactRouter", "components/ajax/ajaxRequest", "./initUser", "./
     },
     getApplicationState: function() {
       var stateServicePath;
-      stateServicePath = "../api/web/v1/states";
+      stateServicePath = api.stateServicePath;
       return new AjaxRequest(stateServicePath, null, "GET", "application/json").always(this.onGetApplicationState);
     },
     onGetApplicationState: function(result) {

@@ -2,10 +2,11 @@ define [
     "underscore"
     "jquery"
     "react"
+    "api"
     "./choice"
     "./mixins/ApplicationState"
     "components/ajax/ajaxRequest"
-], (_, $, React, Choice, ApplicationState, AjaxRequest) ->
+], (_, $, React, api, Choice, ApplicationState, AjaxRequest) ->
 
     Step = React.createClass
 
@@ -25,8 +26,8 @@ define [
         getDefaultProps: ->
             return {
                 resultRoutePath: "result"
-                stepServicePath: "../api/web/v1/steps"
-                checkAnswerServicePath: "../api/web/v1/answers"
+                stepServicePath: api.stepServicePath
+                checkAnswerServicePath: api.checkAnswerServicePath
             }
 
         componentDidMount: ->

@@ -1,11 +1,12 @@
 define [
     "react"
     "reactRouter"
+    "api"
     "components/ajax/ajaxRequest"
     "./initUser"
     "./step"
     "./result"
-], (React, Router, AjaxRequest, InitUserHandler, StepHandler, ResultHandler) ->
+], (React, Router, api, AjaxRequest, InitUserHandler, StepHandler, ResultHandler) ->
 
     Route = Router.Route
     NotFoundRoute = Router.NotFoundRoute
@@ -21,7 +22,7 @@ define [
                 @.getApplicationState()
 
             getApplicationState: ->
-                stateServicePath = "../api/web/v1/states"
+                stateServicePath = api.stateServicePath
                 new AjaxRequest(stateServicePath, null, "GET", "application/json").always @onGetApplicationState
 
             onGetApplicationState: (result) ->

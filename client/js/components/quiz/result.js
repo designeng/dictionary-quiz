@@ -6,7 +6,7 @@ define(["underscore", "jquery", "react", "components/ajax/ajaxRequest"], functio
     },
     getDefaultProps: function() {
       return {
-        userScorePath: "../api/web/v1/sessions",
+        userScorePath: "/api/users",
         method: "GET"
       };
     },
