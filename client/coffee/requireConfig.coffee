@@ -1,6 +1,6 @@
 require.config
 
-    baseUrl: "/app/js"
+    baseUrl: "/js"
 
     paths: {
 

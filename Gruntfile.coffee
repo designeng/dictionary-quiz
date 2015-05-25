@@ -4,7 +4,7 @@ module.exports = (grunt) ->
         nodemon:
             dev:
                 script: 'server.js'
-                watch: ['client/*']
+                watch: ['app/*']
 
         watch:
             coffee_app:

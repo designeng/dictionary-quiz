@@ -10,12 +10,6 @@ var stepController      = require('../controllers/step');
 var wordController      = require('../controllers/word');
 var mistakeController   = require('../controllers/mistake');
 
-router.get('/quiz', function(req, res) {
-    console.log("-----/");
-    // indexHtml = fs.readFileSync(__dirname + '/../../client/index.html', 'utf-8');
-    // res.html(indexHtml);
-});
-
 // in our small quiz application user is a current player, while we have no registration phase. So, we have no update method yet.
 
 router.route("/users")
