@@ -77,7 +77,7 @@ module.exports = (grunt) ->
                     baseUrl: "client/js/"
                     mainConfigFile: "client/js/requireConfig.js"
                     name: "main"
-                    out: "build/main.js"
+                    out: "client/build/main.js"
 
 
     grunt.loadNpmTasks "grunt-contrib-watch"
