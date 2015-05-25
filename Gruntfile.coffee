@@ -99,23 +99,15 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks "grunt-contrib-copy"
     grunt.loadNpmTasks "grunt-newer"
     grunt.loadNpmTasks "grunt-contrib-requirejs"
+    grunt.loadNpmTasks "grunt-nodemon"
+    # ["dataMainAttr"] tasks
+    grunt.loadTasks "tasks"
 
     # grunt.registerTask "default", ["connect:server", "watch"]
     grunt.registerTask "build", ["dataMainAttr:prod", "requirejs:compile", "default"]
 
-    grunt.registerMultiTask "dataMainAttr", "changes data-main attribute in index.html", (env) ->
-        done = @async()
-        grunt.log.write "Start rewrite index.html data-main attribute..."
-        content = grunt.file.read @.data.indexPath, {encoding: "utf-8"}
-        content = content.replace @.data.from, @.data.to
-        grunt.file.write @.data.indexPath, content
-        grunt.log.write "Done"
-        done()
-
     # compilation
     grunt.registerTask "coffee-compile-app", ["newer:cjsx:app"]
-
-    grunt.loadNpmTasks "grunt-nodemon"
 
     # TODO: nodemon does not watch .coffee - open issue
     grunt.registerTask "default", ["nodemon"]
