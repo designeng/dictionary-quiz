@@ -1,4 +1,4 @@
-define(["underscore", "jquery", "react", "components/ajax/ajaxRequest"], function(_, $, React, AjaxRequest) {
+define(["underscore", "jquery", "react", "api", "components/ajax/ajaxRequest"], function(_, $, React, api, AjaxRequest) {
   var Result;
   return Result = React.createClass({
     contextTypes: {
@@ -6,7 +6,7 @@ define(["underscore", "jquery", "react", "components/ajax/ajaxRequest"], functio
     },
     getDefaultProps: function() {
       return {
-        userScorePath: "/api/users",
+        userScorePath: api.userScorePath,
         method: "GET"
       };
     },
@@ -19,13 +19,11 @@ define(["underscore", "jquery", "react", "components/ajax/ajaxRequest"], functio
       return this.getUserScore();
     },
     getUserScore: function() {
-      return new AjaxRequest(this.props.userScorePath, {
-        score: true
-      }, this.props.method, "application/json").always(this.onGetUserScore);
+      return new AjaxRequest(this.props.userScorePath, null, this.props.method, "application/json").always(this.onGetUserScore);
     },
     onGetUserScore: function(result) {
       return this.setState({
-        score: result["user_score"]
+        score: result["userscore"]
       });
     },
     btnClickHandler: function() {

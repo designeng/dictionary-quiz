@@ -44,6 +44,11 @@ var UserController = {
                     console.log(error);
                 }
             )
+        },
+
+    getUserScore: function(req, res) {
+            var session = req.session;
+            res.json({userscore: session["userscore"]});
         }
 }
 

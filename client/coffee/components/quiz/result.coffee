@@ -24,11 +24,11 @@ define [
             @.getUserScore()
 
         getUserScore: ->
-            new AjaxRequest(@.props.userScorePath, {score: true}, @.props.method, "application/json").always @onGetUserScore
+            new AjaxRequest(@.props.userScorePath, null, @.props.method, "application/json").always @onGetUserScore
 
         onGetUserScore: (result) ->
             @.setState
-                score: result["user_score"]
+                score: result["userscore"]
 
         btnClickHandler: ->
             @.context.router.transitionTo("user")

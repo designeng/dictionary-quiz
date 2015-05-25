@@ -119,8 +119,6 @@ var registerAnswer = function(req, res) {
             }).then(
                 function() {
                     mistakescount++;
-
-                    console.log(":::::::MISTAKES COUNT:::::", mistakescount);
                     session["mistakescount"] = mistakescount;
 
                     // quiz is over, if {3} mistakes occured

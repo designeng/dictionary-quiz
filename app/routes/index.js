@@ -37,11 +37,16 @@ router.route("/step")
 router.route("/step/answer")
     .post(stepController.registerAnswer);
 
+// Quiz result score route
+// TODO: redirect to /users/{user_id}/score ?
+router.route("/score")
+    .get(userController.getUserScore);
+
 // debug
 router.route("/session/close")
     .get(function(req, res) {
-        delete req.session;
-        res.json({message: "session destroyed"})
+        delete req.session.username;
+        res.json({message: "session username removed"})
     });
 
 module.exports = router;
