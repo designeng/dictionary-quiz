@@ -2,8 +2,9 @@ define [
     "underscore"
     "jquery"
     "react"
+    "api"
     "components/ajax/ajaxRequest"
-], (_, $, React, AjaxRequest) ->
+], (_, $, React, api, AjaxRequest) ->
 
     Result = React.createClass
 
@@ -11,7 +12,7 @@ define [
             router: React.PropTypes.func
 
         getDefaultProps: ->
-            userScorePath: "/api/users"
+            userScorePath: api.userScorePath
             method: "GET"
 
         getInitialState: ->

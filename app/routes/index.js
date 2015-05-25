@@ -37,4 +37,11 @@ router.route("/step")
 router.route("/step/answer")
     .post(stepController.registerAnswer);
 
+// debug
+router.route("/session/close")
+    .get(function(req, res) {
+        delete req.session;
+        res.json({message: "session destroyed"})
+    });
+
 module.exports = router;

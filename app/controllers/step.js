@@ -119,6 +119,8 @@ var registerAnswer = function(req, res) {
             }).then(
                 function() {
                     mistakescount++;
+
+                    console.log(":::::::MISTAKES COUNT:::::", mistakescount);
                     session["mistakescount"] = mistakescount;
 
                     // quiz is over, if {3} mistakes occured
@@ -126,6 +128,9 @@ var registerAnswer = function(req, res) {
                         UserController.saveCurrentUserResult(session);
                         response = updateResponse(response, { state: "QUIZ_END_WITH_MISTAKES" });
                         
+                        return res.json(response)
+                    } else {
+                        response = updateResponse(response, { state: "NEXT_QUESTION", mistakescount: mistakescount });
                         return res.json(response)
                     }
                 },
@@ -138,11 +143,10 @@ var registerAnswer = function(req, res) {
             point = 1;
             ++userscore;
             session["userscore"] = userscore;
-        }
 
-        response =  updateResponse(response, { point: point, userscore: userscore, mistakescount: mistakescount, currentWord: currentWord, answer: value });
-        
-        return res.json(response)
+            response =  updateResponse(response, { point: point, userscore: userscore, mistakescount: mistakescount, currentWord: currentWord, answer: value, TEST: 123 });
+            return res.json(response)
+        }
     }
 }
 
