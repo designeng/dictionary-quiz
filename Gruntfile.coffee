@@ -1,5 +1,7 @@
 module.exports = (grunt) ->
 
+    indexPath = "client/index.html"
+
     grunt.initConfig
         nodemon:
             dev:
@@ -79,6 +81,15 @@ module.exports = (grunt) ->
                     name: "main"
                     out: "client/build/main.js"
 
+        dataMainAttr:
+            dev:
+                from: "build/main"
+                to: "js/supermain"
+                indexPath: indexPath
+            prod:
+                form: "js/supermain"
+                to: "build/main"
+                indexPath: indexPath
 
     grunt.loadNpmTasks "grunt-contrib-watch"
     grunt.loadNpmTasks "grunt-contrib-coffee"
@@ -90,7 +101,16 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks "grunt-contrib-requirejs"
 
     # grunt.registerTask "default", ["connect:server", "watch"]
-    grunt.registerTask "build", ["requirejs:compile", "default"]
+    grunt.registerTask "build", ["dataMainAttr:prod", "requirejs:compile", "default"]
+
+    grunt.registerMultiTask "dataMainAttr", "changes data-main attribute in index.html", (env) ->
+        done = @async()
+        grunt.log.write "Start rewrite index..."
+        content = grunt.file.read @.data.indexPath, {encoding: "utf-8"}
+        console.log "content", @.data.from, @.data.to
+        content = content.replace @.data.from, @.data.to
+        grunt.file.write @.data.indexPath, content
+        done()
 
     # compilation
     grunt.registerTask "coffee-compile-app", ["newer:cjsx:app"]
@@ -100,4 +120,4 @@ module.exports = (grunt) ->
     # TODO: nodemon does not watch .coffee - open issue
     grunt.registerTask "default", ["nodemon"]
     # compile coffee separately (use concurency?)
-    grunt.registerTask "compile", ["watch"]
+    grunt.registerTask "compile", ["dataMainAttr:dev", "watch"]
