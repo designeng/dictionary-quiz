@@ -83,11 +83,11 @@ module.exports = (grunt) ->
 
         dataMainAttr:
             dev:
-                from: "build/main"
+                from: /build\/main/g
                 to: "js/supermain"
                 indexPath: indexPath
             prod:
-                form: "js/supermain"
+                from: /js\/supermain/g
                 to: "build/main"
                 indexPath: indexPath
 
@@ -107,7 +107,6 @@ module.exports = (grunt) ->
         done = @async()
         grunt.log.write "Start rewrite index..."
         content = grunt.file.read @.data.indexPath, {encoding: "utf-8"}
-        console.log "content", @.data.from, @.data.to
         content = content.replace @.data.from, @.data.to
         grunt.file.write @.data.indexPath, content
         done()
