@@ -43,9 +43,16 @@ var setInitialApplicationState = function(req, res, username) {
     });
 }
 
+var destroySession = function (session) {
+    session.destroy(function (error) {
+        // TODO: session destroy error report
+    });
+}
+
 var StateController = {
     getApplicationState: getApplicationState,
-    setInitialApplicationState: setInitialApplicationState
+    setInitialApplicationState: setInitialApplicationState,
+    destroySession: destroySession
 }
 
 module.exports = StateController

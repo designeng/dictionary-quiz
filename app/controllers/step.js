@@ -3,6 +3,7 @@
 var _ = require("lodash");
 var models  = require('../models');
 var UserController  = require('../controllers/user');
+var StateController  = require('../controllers/state');
 
 var getNextQuestion = function(req, res) {
     var response;
@@ -19,10 +20,13 @@ var getNextQuestion = function(req, res) {
 
     if(!words.length){
         UserController.saveCurrentUserResult(session);
-        return res.json({
-                state: "QUIZ_END_WORDS",
-                userscore: session["userscore"]
-            });
+        response = {
+            state: "QUIZ_END_WORDS",
+            mistakescount: mistakescount,
+            userscore: session["userscore"]
+        }
+        StateController.destroySession(session);
+        return res.json(response);
     }
 
     var dictionary = session['dictionary'];
@@ -124,11 +128,12 @@ var registerAnswer = function(req, res) {
                     // quiz is over, if {3} mistakes occured
                     if (mistakescount == 3){
                         UserController.saveCurrentUserResult(session);
-                        response = updateResponse(response, { state: "QUIZ_END_WITH_MISTAKES" });
-                        
+                        response = updateResponse(response, { state: "QUIZ_END_WITH_MISTAKES", mistakescount: mistakescount, userscore: session["userscore"] });
+                        StateController.destroySession(session);
+
                         return res.json(response)
                     } else {
-                        response = updateResponse(response, { state: "NEXT_QUESTION", mistakescount: mistakescount });
+                        response = updateResponse(response, { state: "NEXT_QUESTION", mistakescount: mistakescount, userscore: session["userscore"] });
                         return res.json(response)
                     }
                 },
