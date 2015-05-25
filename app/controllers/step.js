@@ -53,7 +53,7 @@ var getNextQuestion = function(req, res) {
 
     additionalChoice.push(randomWord[lang_keys[1]]);
 
-    _.shuffle(additionalChoice);
+    additionalChoice = _.shuffle(additionalChoice);
 
     session['words'] = words;
 
