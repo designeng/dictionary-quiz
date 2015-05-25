@@ -63,7 +63,7 @@ define [
                 return @.context.router.transitionTo(@.props.resultRoutePath)
             
             # success answer
-            if result.point == 1
+            if result.state == "RIGHT_ANSWER"
                 return @.next()
             # unsuccess answer
             else

@@ -38,7 +38,7 @@ var UserController = {
                 userscore: session["userscore"]
             }).then(
                 function() {
-                    console.log("User results:::", session["userscore"]);
+                    console.log("User quiz result:", session["userscore"]);
                 },
                 function(error) {
                     console.log(error);
@@ -49,6 +49,10 @@ var UserController = {
     getUserScore: function(req, res) {
             var session = req.session;
             res.json({userscore: session["userscore"]});
+
+            // quiz logical end, destroy session now
+            StateController.destroySession(session);
+            res.end();
         }
 }
 

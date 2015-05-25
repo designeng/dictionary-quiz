@@ -52,7 +52,7 @@ define(["underscore", "jquery", "react", "api", "./choice", "./mixins/Applicatio
       if (result.state === "QUIZ_END_WITH_MISTAKES") {
         return this.context.router.transitionTo(this.props.resultRoutePath);
       }
-      if (result.point === 1) {
+      if (result.state === "RIGHT_ANSWER") {
         return this.next();
       } else {
         this.stepWarning.show();

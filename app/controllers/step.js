@@ -3,7 +3,6 @@
 var _ = require("lodash");
 var models  = require('../models');
 var UserController  = require('../controllers/user');
-var StateController  = require('../controllers/state');
 
 var getNextQuestion = function(req, res) {
     var response;
@@ -22,10 +21,9 @@ var getNextQuestion = function(req, res) {
         UserController.saveCurrentUserResult(session);
         response = {
             state: "QUIZ_END_WORDS",
-            mistakescount: mistakescount,
+            mistakescount: session["mistakescount"],
             userscore: session["userscore"]
         }
-        StateController.destroySession(session);
         return res.json(response);
     }
 
@@ -105,11 +103,7 @@ var registerAnswer = function(req, res) {
     if (answerLang === "ERROR"){
         response = {
             error: "NOT_VALID_ANSWER_VALUE",
-            your_answer: value,
-            // debug
-            currentWord: currentWord,
-            originLang: originLang,
-            answerLang: answerLang
+            answer: value
         };
         return res.json(response)
     } else {
@@ -129,11 +123,9 @@ var registerAnswer = function(req, res) {
                     if (mistakescount == 3){
                         UserController.saveCurrentUserResult(session);
                         response = updateResponse(response, { state: "QUIZ_END_WITH_MISTAKES", mistakescount: mistakescount, userscore: session["userscore"] });
-                        StateController.destroySession(session);
-
                         return res.json(response)
                     } else {
-                        response = updateResponse(response, { state: "NEXT_QUESTION", mistakescount: mistakescount, userscore: session["userscore"] });
+                        response = updateResponse(response, { state: "WRONG_ANSWER", mistakescount: mistakescount, userscore: session["userscore"] });
                         return res.json(response)
                     }
                 },
@@ -147,7 +139,7 @@ var registerAnswer = function(req, res) {
             ++userscore;
             session["userscore"] = userscore;
 
-            response =  updateResponse(response, { point: point, userscore: userscore, mistakescount: mistakescount, currentWord: currentWord, answer: value, TEST: 123 });
+            response =  updateResponse(response, { state: "RIGHT_ANSWER", userscore: userscore, mistakescount: mistakescount });
             return res.json(response)
         }
     }
