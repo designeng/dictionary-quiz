@@ -36,11 +36,15 @@ define(["react", "reactRouter", "api", "components/ajax/ajaxRequest", "./initUse
       router: React.PropTypes.func
     },
     componentDidMount: function() {
-      return setTimeout((function(_this) {
-        return function() {
-          return _this.context.router.transitionTo('user');
-        };
-      })(this), 2000);
+      if (window.location.href.slice(-2) === "#/") {
+        return this.context.router.transitionTo('user');
+      } else {
+        return setTimeout((function(_this) {
+          return function() {
+            return _this.context.router.transitionTo('user');
+          };
+        })(this), 2000);
+      }
     },
     render: function() {
       var NotFoundWarningClass;

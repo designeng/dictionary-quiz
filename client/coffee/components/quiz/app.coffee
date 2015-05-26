@@ -44,9 +44,13 @@ define [
             router: React.PropTypes.func
 
         componentDidMount: ->
-            setTimeout () =>
-                @.context.router.transitionTo('user') 
-            , 2000
+            if window.location.href.slice(-2) == "#/"
+                @.context.router.transitionTo('user')
+            else
+                # show NotFoundWarning for couple of seconds
+                setTimeout () =>
+                    @.context.router.transitionTo('user') 
+                , 2000
 
         render: ->
             NotFoundWarningClass = "bg-danger warning"
