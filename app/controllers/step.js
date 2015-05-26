@@ -71,8 +71,7 @@ var registerAnswer = function(req, res) {
     var mistakescount = session["mistakescount"];
     var userscore = session["userscore"];
     var currentWord = session["currentWord"];
-    var point = 0,
-        mistake;
+    var mistake;
 
     var response = {};
 
@@ -135,7 +134,6 @@ var registerAnswer = function(req, res) {
             );
 
         } else {
-            point = 1;
             ++userscore;
             session["userscore"] = userscore;
 
