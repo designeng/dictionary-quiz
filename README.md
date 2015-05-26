@@ -14,7 +14,7 @@ https://dictionary-quiz.herokuapp.com
 
 + Server api: Express.js 4, Sequelize ORM 3v, Sqlite3, session storage: [session-file-store](https://github.com/valery-barysok/session-file-store).
 
-+ After installing npm and bower dependencies, run `grunt compile` task command for client `.coffee` compilation. 
++ After installing npm and bower dependencies (`npm install`, `bower install`), run `grunt compile` task command for client `.coffee` compilation. 
 
 + Default grunt task starts express server, so just open in your favorite browser `http://localhost:8080/`. All api `.js` files under `nodedemon` watch till the development process.
 
