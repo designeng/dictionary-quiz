@@ -5,8 +5,7 @@
   "scripts": {
     "test": "npm run test-unit && npm run test-integration",
     "test-unit": "mocha test/unit/*.test.js",
-    "test-integration": "mocha test/integration/*.test.js",
-    "postinstall": "bower install"
+    "test-integration": "mocha test/integration/*.test.js"
   },
   "dependencies": {
     "body-parser": "~1.0.1",
