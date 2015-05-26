@@ -14,7 +14,7 @@ https://dictionary-quiz.herokuapp.com
 
 + After installing npm and bower dependencies, run `grunt compile` task command for client `.coffee` compilation. 
 
-+ Default grunt task starts express server on `8080` port.
++ Default grunt task starts express server on `8080` port. All api `.js` files under `nodedemon` watch till the development process.
 
 + Before deploy run `grunt build` to rewrite index.html `data-main` attribute value and to create requirejs destination file `client/build/main.js`.
 
