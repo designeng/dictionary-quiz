@@ -3,6 +3,8 @@
 ###Description
 Application is designed to check user vocabulary. After user registration (`#/user`) the quiz begins (`#/questions`). During the quiz user can make only two mistakes - after third mistake the quiz is over.
 If user fails with right word value input, second attempt is provided.
+Mistakes are saved in database to get statistic for most popular mistakes.
+User result will be saved to database on quiz end too.
 
 ###Demo
 https://dictionary-quiz.herokuapp.com
