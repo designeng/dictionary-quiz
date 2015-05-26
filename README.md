@@ -7,6 +7,15 @@ If user fails with right word value input, second attempt is provided.
 ###Demo
 https://dictionary-quiz.herokuapp.com
 
+###Development
++ Client built on the top of React.js. React-router used for routing between different 'pages'.
+
++ Server api: Express.js 4, Sequelize ORM 3v, Sqlite3, session storage: [session-file-store](https://github.com/valery-barysok/session-file-store).
+
++ After installing npm and bower dependencies, run `grunt compile` task command for client `.coffee` compilation. 
+
++ Default grunt task starts express server on `8080` port.
+
 ###Browsers compatibility
 Tested in Chrome (v42), Safari (v7.0), Firefox (v37).
 
