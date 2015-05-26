@@ -30,10 +30,7 @@ require.config({
       location: "vendors/react-router/build/umd"
     }
   ],
-  shim: {},
-  hbs: {
-    templateExtension: ".html"
-  }
+  shim: {}
 });
 
 require(["components/quiz/app"], function() {});

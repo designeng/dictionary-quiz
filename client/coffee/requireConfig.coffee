@@ -7,7 +7,6 @@ require.config
     }
 
     packages: [
-        # lib packages
         {
             name: "underscore"
             main: "lodash"
@@ -43,6 +42,3 @@ require.config
     shim: {
        
     }
-
-    hbs:
-        templateExtension: ".html"
