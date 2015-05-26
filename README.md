@@ -16,6 +16,8 @@ https://dictionary-quiz.herokuapp.com
 
 + Default grunt task starts express server on `8080` port.
 
++ Before deploy run `grunt build` to rewrite index.html `data-main` attribute value and to create requirejs destination file `client/build/main.js`.
+
 ###Browsers compatibility
 Tested in Chrome (v42), Safari (v7.0), Firefox (v37).
 
