@@ -8,7 +8,7 @@ If user fails with right word value input, second attempt is provided.
 https://dictionary-quiz.herokuapp.com
 
 ###Development
-+ Client built on the top of React.js. React-router used for routing between different 'pages'.
++ Client built on the top of React.js. React-router used for routing between different 'pages'. (I used `coffeescript` for client modules for the reason the React `.jsx` should be compiled anyway.)
 
 + Server api: Express.js 4, Sequelize ORM 3v, Sqlite3, session storage: [session-file-store](https://github.com/valery-barysok/session-file-store).
 
