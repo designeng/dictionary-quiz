@@ -37,11 +37,7 @@ var getNextQuestion = function(req, res) {
     lang_keys = _.shuffle(lang_keys);
 
     dictionary = _.filter(dictionary, function(item){
-        if (item["id"] != randomWord["id"]){
-            return true;
-        } else {
-            return false;
-        }
+        return item["id"] != randomWord["id"];
     });
 
     dictionary = _.shuffle(dictionary);
